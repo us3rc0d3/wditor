@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Code Editor</title>
+  <meta name="description" content="Wditor is your web editor try your codes now without download"/>
+  <meta name="developer" content="develperofdarkness">
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #282c34;
+      color: #abb2bf;
+      padding: 21px;
+    }
+
+    /* ستايل لمنطقة إدخال الكود */
+    textarea {
+      width: 100%;
+      height: 300px;
+      background-color: #1e2127;
+      color: #abb2bf;
+      border: none;
+      outline: none;
+      resize: none;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    /* ستايل لزر القيام بتشغيل الكود */
+    button {
+      background-color: #61afef;
+      color: #282c34;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 9%;
+    }
+    #result {
+      margin-top: 20px;
+      background-color: #1e2127;
+      padding: 20px;
+    }
+  h1 {
+    font-size: 65px;
+    font-weight: bold;
+    color: #00FF7F;
+    margin: 3;
+    text-align: center;
+    padding: 10px 0;
+    display : inline;
+  }
+  footer{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+}
+#chat-container {
+  margin-top: 20px;
+  background-color: #1e2127;
+  padding: 20px;
+  border-radius: 5px;
+}
+#chat-messages {
+  height: 200px;
+  overflow: auto;
+  background-color: #282c34;
+  color: #abb2bf;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+#chat-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #1e2127;
+  color: #abb2bf;
+  border: none;
+  outline: none;
+}
+#chat-send {
+  background-color: #61afef;
+  color: #282c34;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 9%;
+}
+  </style>
+</head>
+<body>
+  <header style="text-align:center;">
+    <h1>Wditor</h1><sup>front end editor</sup>
+  </header>
+
+  <textarea id="code" class="editor"></textarea>
+  <button id="run">Run</button>
+  <div id="result" class="result"></div>
+
+  <div id="chat-container">
+    <div id="chat-messages">
+      <!-- هنا ستظهر رسائل الدردشة -->
+    </div>
+    <input type="text" id="chat-input" placeholder="اكتب رسالتك">
+    <button id="chat-send">إرسال</button>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // تنفيذ الشيفرة المدخلة وعرض النتيجة
+    $('#run').on('click', function() {
+      var code = $('#code').val();
+      $('#result').html(code);
+      eval(code);
+    });
+
+    // إضافة دالة لإرسال رسالة في الدردشة
+    $('#chat-send').on('click', function() {
+      var message = $('#chat-input').val();
+      $('#chat-messages').append('<p>' + message + '</p>');
+      $('#chat-input').val('');
+    });
+  </script>
+  <footer style="margin :2px">
+      &copy; All rights reserved Wditor 2023
+  </footer>
+</body>
+</html>
