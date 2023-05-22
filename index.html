@@ -1,118 +1,227 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Code Editor</title>
-  <meta name="description" content="Wditor is your web editor try your codes now without download"/>
-  <meta name="developer" content="develperofdarkness">
-  <script> alert("The editor is still under development");</script>
-  <!--Start of Tawk.to Script-->
+<meta charset="UTF-8">
+<title>Code Editor</title>
+<meta name="description" content="Wditor is your web editor try your codes now without download"/>
+<meta name="developer" content="develperofdarkness">
+<script>
+  alert("The editor is still under development");
+</script>
+<!--Start of Tawk.to Script-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/646a300e74285f0ec46cc023/1h0vcnfst';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/646a300e74285f0ec46cc023/1h0vcnfst';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
 </script>
 <!--End of Tawk.to Script-->
-  <style>
-    body {
-      font-family: 'Courier New', monospace;
-      background-color: #282c34;
-      color: #abb2bf;
-      padding: 21px;
-    }
+<style>
+  body {
+    font-family: 'Courier New', monospace;
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 21px;
+  }
+textarea {
+width: 100%;
+height: 300px;
+background-color: #1e2127;
+color: #abb2bf;
+border: none;
+outline: none;
+resize: none;
+padding: 10px;
+font-size: 14px;
+}
 
-    textarea {
-      width: 100%;
-      height: 300px;
-      background-color: #1e2127;
-      color: #abb2bf;
-      border: none;
-      outline: none;
-      resize: none;
-      padding: 10px;
-      font-size: 14px;
-    }
+.btn-container {
+display: flex;
+align-items: center;
+margin-bottom: 10px;
+}
 
-    button, select {
-      background-color: #61afef;
-      color: #282c34;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 9%;
-      margin-left: 10px;
-    }
+.btn-container select {
+background-color: #61afef;
+color: #282c34;
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+border-radius: 9%;
+}
 
-    #result {
-      margin-top: 20px;
-      background-color: #1e2127;
-      padding: 20px;
-    }
+.btn-container button {
+background-color: #61afef;
+color: #282c34;
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+border-radius: 9%;
+margin-left: 10px;
+}
 
-    h1 {
-      font-size: 65px;
-      font-weight: bold;
-      color: #00FF7F;
-      margin: 3;
-      text-align: center;
-      padding: 10px 0;
-      display : inline;
-    }
+#result {
+margin-top: 20px;
+background-color: #1e2127;
+padding: 20px;
+}
 
-    footer {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      min-height: 100vh;
-    }
-  </style>
+h1 {
+font-size: 65px;
+font-weight: bold;
+color: #00FF7F;
+margin: 3;
+text-align: center;
+padding: 10px 0;
+display: inline;
+}
+
+footer {
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+min-height: 100vh;
+}
+
+/* ستايل للـ select container */
+.select-container {
+display: flex;
+flex-grow: 1;
+justify-content: space-between;
+}
+</style>
+
 </head>
 <body>
-  <header style="text-align:center;">
-    <h1>Wditor</h1><sup>front end editor</sup>
-  </header>
+<header style="text-align:center;">
+<h1>Wditor</h1><sup>front end editor</sup>
+</header>
+<div class="btn-container">
+<div class="select-container">
+<select id="themeSelect">
+<option value="verminal">Verminal</option>
+<option value="VSCode">VSCode</option>
+<option value="nord">Nord</option>
+<option value="yeti">Yeti</option>
+</select>
+<select id="file-type">
+<option value="html">HTML</option>
+<option value="css">CSS</option>
+<option value="js">JavaScript</option>
+<option value="ts">TypeScript</option>
+</select>
+</div>
+<button id="run">Run</button>
+<button id="download">Download</button>
+<input type="file" id="upload" style="display: none;">
+<button id="open-file">Open File</button>
+<button id="share">Share</button>
+</div>
+<textarea id="code" class="editor"></textarea>
+<div id="result" class="result"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$('#run').on('click', function() {
+  var code = $('#code').val();
+  $('#result').html(code);
+  eval(code);
+});
+$('#themeSelect').on('change', function() {
+var theme = $(this).val();
+updateTheme(theme);
+});
 
-  <textarea id="code" class="editor"></textarea>
-  <button id="run">Run</button>
-  <button id="download">Download</button>
-  <select id="extension">
-    <option value="html">HTML</option>
-    <option value="css">CSS</option>
-    <option value="js">JavaScript</option>
-    <option value="ts">TypeScript</option>
-  </select>
+function updateTheme(theme) {
+var colors = {
+verminal: {
+body: '#2a2c33',
+textarea: '#1e2127',
+result: '#1e2127',
+},
+VSCode: {
+body: '#1e1e1e',
+textarea: '#1e2127',
+result: '#1e2127',
+},
+nord: {
+body: '#2e3440',
+textarea: '#1e2127',
+result: '#1e2127',
+},
+yeti: {
+body: '#fff9f4',
+textarea: '#1e2127',
+result: '#1e2127',
+},
+};
 
-  <div id="result" class="result"></div>
+var themeColors = colors[theme];
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $('#run').on('click', function() {
-      var code = $('#code').val();
-      $('#result').html(code);
-      eval(code);
-    });
+// تحديث لون body
+$('body').css('background-color', themeColors.body);
 
-    $('#download').on('click', function() {
-      var code = $('#code').val();
-      var extension = $('#extension').val();
-      var fileName = 'code.' + extension;
-      var blob = new Blob([code], { type: 'text/plain' });
+// تحديث لون textarea
+$('textarea').css('background-color', themeColors.textarea);
 
-      var link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = fileName;
-      link.click();
-    });
-  </script>
-  <footer style="margin: 2px">
-    &copy; All rights reserved Wditor 2023
-  </footer>
+// تحديث لون #result
+$('#result').css('background-color', themeColors.result);
+}
+
+updateTheme('verminal');
+
+$('#download').on('click', function() {
+var code = $('#code').val();
+var fileType = $('#file-type').val();
+var fileName = 'code.' + fileType;
+var fileContent = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
+
+var downloadLink = document.createElement('a');
+downloadLink.href = fileContent;
+downloadLink.download = fileName;
+downloadLink.style.display = 'none';
+
+document.body.appendChild(downloadLink);
+downloadLink.click();
+document.body.removeChild(downloadLink);
+});
+
+$('#open-file').on('click', function() {
+$('#upload').trigger('click');
+});
+
+$('#upload').on('change', function(e) {
+var file = e.target.files[0];
+var reader = new FileReader();
+
+reader.onload = function(e) {
+var code = e.target.result;
+$('#code').val(code);
+};
+
+reader.readAsText(file);
+});
+$('#share').on('click', function() {
+var code = $('#code').val();
+var url = window.location.href;
+var sharedCode = code + "\n\n" + "Shared from: " + url;
+
+// Replace the share functionality with your desired sharing mechanism
+alert("Share this code:\n\n" + sharedCode);
+});
+</script>
+
+<footer style="margin :2px">
+&copy; All rights reserved Wditor 2023
+</footer>
 </body>
 </html>
+
+
+
